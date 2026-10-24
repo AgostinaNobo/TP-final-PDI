@@ -1,0 +1,1 @@
+% Detección Circular del Ventrículo Izquierdo

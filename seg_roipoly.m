@@ -1,0 +1,1 @@
+% Segmentación Manual basada en Polígonos
