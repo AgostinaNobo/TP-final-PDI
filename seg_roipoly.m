@@ -9,7 +9,7 @@
 %primero se corre lo comentado y se comenta lo no comentado y luego copio
 %los valores encontrados en los dos vectores y vuelvo a correr la mascara
 
-%[M2_BW1_dias,x1d,y1d] = roipoly(im1_D_lut);
+% [M2_BW1_dias,x1d,y1d] = roipoly(im1_D_lut);
 x1d = [61.8648881239243 54.0421686746988 49.3485370051635 54.9113597246127 60.1265060240964 63.9509466437178 72.2951807228916 85.8545611015491 90.8958691910499 88.6359724612737 86.3760757314975 76.1196213425129 68.1230636833047 61.8648881239243];
 y1d = [44.5679862306368 49.7831325301205 56.3889845094665 70.8175559380379 71.3390705679862 74.2943201376936 74.1204819277108 67.1669535283993 60.3872633390706 53.6075731497418 47.5232358003442 40.5697074010327 44.0464716006885 44.5679862306368];
 M2_BW1_dias = roipoly(im1_D_lut,x1d,y1d);
@@ -60,6 +60,44 @@ y5s = [51.4622425629291 47.9954233409611 46.3775743707094 45.9153318077803 45.91
 M2_BW5_sis = roipoly(im5_S_lut,x5s,y5s);
 
 %%
+
+figure;
+subplot(2,5,1);
+imshow(labeloverlay(uint8(im1_D_bin)*255, M2_BW1_dias, ...
+    'Colormap', [0 1 0], 'Transparency', 0.7)); title('I1 Diastole');
+subplot(2,5,6);
+imshow(labeloverlay(uint8(im1_S_bin)*255, M2_BW1_sis, ...
+    'Colormap', [0 1 0], 'Transparency', 0.7)); title('I1 Sistole');
+
+subplot(2,5,2);
+imshow(labeloverlay(uint8(im2_D_bin)*255, M2_BW2_dias, ...
+    'Colormap', [0 1 0], 'Transparency', 0.7)); title('I2 Diastole');
+subplot(2,5,7);
+imshow(labeloverlay(uint8(im2_S_bin)*255, M2_BW2_sis, ...
+    'Colormap', [0 1 0], 'Transparency', 0.7)); title('I2 Sistole');
+
+subplot(2,5,3);
+imshow(labeloverlay(uint8(im3_D_bin)*255, M2_BW3_dias, ...
+    'Colormap', [0 1 0], 'Transparency', 0.7)); title('I3 Diastole');
+subplot(2,5,8);
+imshow(labeloverlay(uint8(im3_S_bin)*255, M2_BW3_sis, ...
+    'Colormap', [0 1 0], 'Transparency', 0.7)); title('I3 Sistole');
+
+subplot(2,5,4);
+imshow(labeloverlay(uint8(im4_D_bin)*255, M2_BW4_dias, ...
+    'Colormap', [0 1 0], 'Transparency', 0.7)); title('I4 Diastole');
+subplot(2,5,9);
+imshow(labeloverlay(uint8(im4_S_bin)*255, M2_BW4_sis, ...
+    'Colormap', [0 1 0], 'Transparency', 0.7)); title('I4 Sistole');
+
+subplot(2,5,5);
+imshow(labeloverlay(uint8(im5_D_bin)*255, M2_BW5_dias, ...
+    'Colormap', [0 1 0], 'Transparency', 0.7)); title('I5 Diastole');
+subplot(2,5,10);
+imshow(labeloverlay(uint8(im5_S_bin)*255, M2_BW5_sis, ...
+    'Colormap', [0 1 0], 'Transparency', 0.7)); title('I5 Sistole');
+
+
 % Se grafica los resultados con las imagenes del tamanio original
 tamanioOriginal = [256 256]; % tamanio original DICOM
 
