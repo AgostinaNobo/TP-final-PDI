@@ -41,39 +41,100 @@ imk_5S=imgaussfilt(imk_5S,1);
 [L4S, centros4S]=imsegkmeans(imk_4S,3,"NumAttempts",3);
 [L5S, centros5S]=imsegkmeans(imk_5S,3,"NumAttempts",3);
 
+% Tenemos que elegir el cluster correspondiente al VI
+M1D=bestLVMaskFromLabels(imk_1D,L1D);
+M2D=bestLVMaskFromLabels(imk_2D,L2D);
+M3D=bestLVMaskFromLabels(imk_3D,L3D);
+M4D=bestLVMaskFromLabels(imk_4D,L4D);
+M5D=bestLVMaskFromLabels(imk_5D,L5D);
+
+M1S=bestLVMaskFromLabels(imk_1S,L1S);
+M2S=bestLVMaskFromLabels(imk_2S,L2S);
+M3S=bestLVMaskFromLabels(imk_3S,L3S);
+M4S=bestLVMaskFromLabels(imk_4S,L4S);
+M5S=bestLVMaskFromLabels(imk_5S,L5S);
+
 % Mostramos las imagenes con su mascara correspondiente
 figure;
 subplot(2,5,1);
-imshow(labeloverlay(imk_1D, L1D, ...
-    'Transparency', 0.7)); title('I1 Diastole');
+imshow(labeloverlay(imk_1D, M1D, ...
+    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I1 Diastole');
 subplot(2,5,6);
-imshow(labeloverlay(imk_1S, L1S, ...
-    'Transparency', 0.7)); title('I1 Sistole');
+imshow(labeloverlay(imk_1S, M1S, ...
+    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I1 Sistole');
 
 subplot(2,5,2);
-imshow(labeloverlay(imk_2D, L2D, ...
-    'Transparency', 0.7)); title('I2 Diastole');
+imshow(labeloverlay(imk_2D, M2D, ...
+    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I2 Diastole');
 subplot(2,5,7);
-imshow(labeloverlay(imk_2S, L2S, ...
-    'Transparency', 0.7)); title('I2 Sistole');
+imshow(labeloverlay(imk_2S, M2S, ...
+    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I2 Sistole');
 
 subplot(2,5,3);
-imshow(labeloverlay(imk_3D, L3D, ...
-    'Transparency', 0.7)); title('I3 Diastole');
+imshow(labeloverlay(imk_3D, M3D, ...
+    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I3 Diastole');
 subplot(2,5,8);
-imshow(labeloverlay(imk_3S, L3S, ...
-    'Transparency', 0.7)); title('I3 Sistole');
+imshow(labeloverlay(imk_3S, M3S, ...
+    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I3 Sistole');
 
 subplot(2,5,4);
-imshow(labeloverlay(imk_4D, L4D, ...
-    'Transparency', 0.7)); title('I4 Diastole');
+imshow(labeloverlay(imk_4D, M4D, ...
+    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I4 Diastole');
 subplot(2,5,9);
-imshow(labeloverlay(imk_4S, L4S, ...
-    'Transparency', 0.7)); title('I4 Sistole');
+imshow(labeloverlay(imk_4S, M4S, ...
+    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I4 Sistole');
 
 subplot(2,5,5);
-imshow(labeloverlay(imk_5D, L5D, ...
-    'Transparency', 0.7)); title('I5 Diastole');
+imshow(labeloverlay(imk_5D, M5D, ...
+    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I5 Diastole');
 subplot(2,5,10);
-imshow(labeloverlay(imk_5S, L5S, ...
-    'Transparency', 0.7)); title('I5 Sistole');
+imshow(labeloverlay(imk_5S, M5S, ...
+    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I5 Sistole');
+
+% Area del VI en píxeles
+area_px_1D=nnz(M1D);
+area_px_2D=nnz(M2D);
+area_px_3D=nnz(M3D);
+area_px_4D=nnz(M4D);
+area_px_5D=nnz(M5D);
+
+area_px_1S=nnz(M1S);
+area_px_2S=nnz(M2S);
+area_px_3S=nnz(M3S);
+area_px_4S=nnz(M4S);
+area_px_5S=nnz(M5S);
+
+% Guardamos los parametros DICOM de cada imagen para obtener el espacio 
+% entre pixeles
+info_1D=dicominfo("Images_og\IM-0009-0020.dcm");
+info_2D=dicominfo("Images_og\IM-0009-0040.dcm");
+info_3D=dicominfo("Images_og\IM-0009-0060.dcm");
+info_4D=dicominfo("Images_og\IM-0009-0080.dcm");
+info_5D=dicominfo("Images_og\IM-0009-0100.dcm");
+
+info_1S=dicominfo("Images_og\IM-0009-0028.dcm");
+info_2S=dicominfo("Images_og\IM-0009-0048.dcm");
+info_3S=dicominfo("Images_og\IM-0009-0068.dcm");
+info_4S=dicominfo("Images_og\IM-0009-0088.dcm");
+info_5S=dicominfo("Images_og\IM-0009-0108.dcm");
+
+% Area del VI en mm²
+area_mm2_1D=area_px_1D*info_1D.PixelSpacing(1)*info_1D.PixelSpacing(2);
+area_mm2_2D=area_px_2D*info_2D.PixelSpacing(1)*info_2D.PixelSpacing(2);
+area_mm2_3D=area_px_3D*info_3D.PixelSpacing(1)*info_3D.PixelSpacing(2);
+area_mm2_4D=area_px_4D*info_4D.PixelSpacing(1)*info_4D.PixelSpacing(2);
+area_mm2_5D=area_px_5D*info_5D.PixelSpacing(1)*info_5D.PixelSpacing(2);
+
+area_mm2_1S=area_px_1S*info_1S.PixelSpacing(1)*info_1S.PixelSpacing(2);
+area_mm2_2S=area_px_2S*info_2S.PixelSpacing(1)*info_2S.PixelSpacing(2);
+area_mm2_3S=area_px_3S*info_3S.PixelSpacing(1)*info_3S.PixelSpacing(2);
+area_mm2_4S=area_px_4S*info_4S.PixelSpacing(1)*info_4S.PixelSpacing(2);
+area_mm2_5S=area_px_5S*info_5S.PixelSpacing(1)*info_5S.PixelSpacing(2);
+
+% Fraccion de eyeccion estimada
+fprintf('-----Resultados usando deteccion circular (imfindcircles)----- \n');
+fprintf('FE IMG 1: %.1f%%\n', ((area_mm2_1D-area_mm2_1S)/area_mm2_1D)*100);
+fprintf('FE IMG 2: %.1f%%\n', ((area_mm2_2D-area_mm2_2S)/area_mm2_2D)*100);
+fprintf('FE IMG 3: %.1f%%\n', ((area_mm2_3D-area_mm2_3S)/area_mm2_3D)*100);
+fprintf('FE IMG 4: %.1f%%\n', ((area_mm2_4D-area_mm2_4S)/area_mm2_4D)*100);
+fprintf('FE IMG 5: %.1f%%\n', ((area_mm2_5D-area_mm2_5S)/area_mm2_5D)*100);
