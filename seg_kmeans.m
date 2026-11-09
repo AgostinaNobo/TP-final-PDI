@@ -132,7 +132,7 @@ area_mm2_4S=area_px_4S*info_4S.PixelSpacing(1)*info_4S.PixelSpacing(2);
 area_mm2_5S=area_px_5S*info_5S.PixelSpacing(1)*info_5S.PixelSpacing(2);
 
 % Fraccion de eyeccion estimada
-fprintf('-----Resultados usando deteccion circular (imfindcircles)----- \n');
+fprintf('-----Resultados usando kmeans----- \n');
 fprintf('FE IMG 1: %.1f%%\n', ((area_mm2_1D-area_mm2_1S)/area_mm2_1D)*100);
 fprintf('FE IMG 2: %.1f%%\n', ((area_mm2_2D-area_mm2_2S)/area_mm2_2D)*100);
 fprintf('FE IMG 3: %.1f%%\n', ((area_mm2_3D-area_mm2_3S)/area_mm2_3D)*100);

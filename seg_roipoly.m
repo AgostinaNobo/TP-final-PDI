@@ -59,8 +59,6 @@ x5s = [49.7288329519451 51.3466819221968 53.4267734553776 55.7379862700229 58.97
 y5s = [51.4622425629291 47.9954233409611 46.3775743707094 45.9153318077803 45.9153318077803 47.5331807780320 49.3821510297483 51.9244851258581 54.4668192219680 57.7025171624714 60.4759725400458 63.7116704805492 66.4851258581236 67.8718535469107 68.1029748283753 67.8718535469107 66.2540045766590 64.1739130434783 60.0137299771167 57.9336384439359 53.3112128146453 51.4622425629291];
 M2_BW5_sis = roipoly(im5_S_lut,x5s,y5s);
 
-%%
-
 figure;
 subplot(2,5,1);
 imshow(labeloverlay(uint8(im1_D_bin)*255, M2_BW1_dias, ...
@@ -97,61 +95,50 @@ subplot(2,5,10);
 imshow(labeloverlay(uint8(im5_S_bin)*255, M2_BW5_sis, ...
     'Colormap', [0 1 0], 'Transparency', 0.7)); title('I5 Sistole');
 
+% Area del VI en píxeles
+area_px_1D=nnz(M2_BW1_dias);
+area_px_2D=nnz(M2_BW2_dias);
+area_px_3D=nnz(M2_BW3_dias);
+area_px_4D=nnz(M2_BW4_dias);
+area_px_5D=nnz(M2_BW5_dias);
 
-% Se grafica los resultados con las imagenes del tamanio original
-tamanioOriginal = [256 256]; % tamanio original DICOM
+area_px_1S=nnz(M2_BW1_sis);
+area_px_2S=nnz(M2_BW2_sis);
+area_px_3S=nnz(M2_BW3_sis);
+area_px_4S=nnz(M2_BW4_sis);
+area_px_5S=nnz(M2_BW5_sis);
 
-idx1 = 70;
-idx2 = 170;
+% Guardamos los parametros DICOM de cada imagen para obtener el espacio 
+% entre pixeles
+info_1D=dicominfo("Images_og\IM-0009-0020.dcm");
+info_2D=dicominfo("Images_og\IM-0009-0040.dcm");
+info_3D=dicominfo("Images_og\IM-0009-0060.dcm");
+info_4D=dicominfo("Images_og\IM-0009-0080.dcm");
+info_5D=dicominfo("Images_og\IM-0009-0100.dcm");
 
-M2_BW1_dias_res  = Segm2Original(M2_BW1_dias,  idx1, idx2, tamanioOriginal);
-M2_BW2_dias_res  = Segm2Original(M2_BW2_dias,  idx1, idx2, tamanioOriginal);
-M2_BW3_dias_res  = Segm2Original(M2_BW3_dias,  idx1, idx2, tamanioOriginal);
-M2_BW4_dias_res  = Segm2Original(M2_BW4_dias,  idx1, idx2, tamanioOriginal);
-M2_BW5_dias_res  = Segm2Original(M2_BW5_dias,  idx1, idx2, tamanioOriginal);
+info_1S=dicominfo("Images_og\IM-0009-0028.dcm");
+info_2S=dicominfo("Images_og\IM-0009-0048.dcm");
+info_3S=dicominfo("Images_og\IM-0009-0068.dcm");
+info_4S=dicominfo("Images_og\IM-0009-0088.dcm");
+info_5S=dicominfo("Images_og\IM-0009-0108.dcm");
 
- 
-M2_BW1_sis_res = Segm2Original(M2_BW1_sis, idx1, idx2, tamanioOriginal);
-M2_BW2_sis_res = Segm2Original(M2_BW2_sis, idx1, idx2, tamanioOriginal);
-M2_BW3_sis_res = Segm2Original(M2_BW3_sis, idx1, idx2, tamanioOriginal);
-M2_BW4_sis_res = Segm2Original(M2_BW4_sis, idx1, idx2, tamanioOriginal);
-M2_BW5_sis_res = Segm2Original(M2_BW5_sis, idx1, idx2, tamanioOriginal);
+% Area del VI en mm²
+area_mm2_1D=area_px_1D*info_1D.PixelSpacing(1)*info_1D.PixelSpacing(2);
+area_mm2_2D=area_px_2D*info_2D.PixelSpacing(1)*info_2D.PixelSpacing(2);
+area_mm2_3D=area_px_3D*info_3D.PixelSpacing(1)*info_3D.PixelSpacing(2);
+area_mm2_4D=area_px_4D*info_4D.PixelSpacing(1)*info_4D.PixelSpacing(2);
+area_mm2_5D=area_px_5D*info_5D.PixelSpacing(1)*info_5D.PixelSpacing(2);
 
-figure;
-subplot(2,5,6);
-imagesc(M2_BW1_sis_res); colormap('gray'); title('Vol Sis Img1 Estimado');
+area_mm2_1S=area_px_1S*info_1S.PixelSpacing(1)*info_1S.PixelSpacing(2);
+area_mm2_2S=area_px_2S*info_2S.PixelSpacing(1)*info_2S.PixelSpacing(2);
+area_mm2_3S=area_px_3S*info_3S.PixelSpacing(1)*info_3S.PixelSpacing(2);
+area_mm2_4S=area_px_4S*info_4S.PixelSpacing(1)*info_4S.PixelSpacing(2);
+area_mm2_5S=area_px_5S*info_5S.PixelSpacing(1)*info_5S.PixelSpacing(2);
 
-subplot(2,5,7);
-imagesc(M2_BW2_sis_res); colormap('gray'); title('Vol Sis Img2 Estimado');
-
-subplot(2,5,8);
-imagesc(M2_BW3_sis_res); colormap('gray'); title('Vol Sis Img3 Estimado');
-
-subplot(2,5,9);
-imagesc(M2_BW4_sis_res); colormap('gray'); title('Vol Sis Img4 Estimado');
-
-subplot(2,5,10);
-imagesc(M2_BW5_sis_res); colormap('gray'); title('Vol Sis Img5 Estimado');
-
-subplot(2,5,1);
-imagesc(M2_BW1_dias_res); colormap('gray'); title('Vol Dias Img1 Estimado');
-
-subplot(2,5,2);
-imagesc(M2_BW2_dias_res); colormap('gray'); title('Vol Dias Img2 Estimado');
-
-subplot(2,5,3);
-imagesc(M2_BW3_dias_res); colormap('gray'); title('Vol Dias Img3 Estimado');
-
-subplot(2,5,4);
-imagesc(M2_BW4_dias_res); colormap('gray'); title('Vol Dias Img4 Estimado');
-
-subplot(2,5,5);
-imagesc(M2_BW5_dias_res); colormap('gray'); title('Vol Img5Dias Estimado');
-
-%% Fracción de eyección estimada
-fprintf('-----Resultados usando segmentacion manual (roipoly)----- \n');
-fprintf('Fracción de eyección estimada IMG 1: %g\n', (sum(M2_BW1_dias_res(:)) - sum(M2_BW1_sis_res(:)))/sum(M2_BW1_dias_res(:)));
-fprintf('Fracción de eyección estimada IMG 2: %g\n', (sum(M2_BW2_dias_res(:)) - sum(M2_BW2_sis_res(:)))/sum(M2_BW2_dias_res(:)));
-fprintf('Fracción de eyección estimada IMG 3: %g\n', (sum(M2_BW3_dias_res(:)) - sum(M2_BW3_sis_res(:)))/sum(M2_BW3_dias_res(:)));
-fprintf('Fracción de eyección estimada IMG 4: %g\n', (sum(M2_BW4_dias_res(:)) - sum(M2_BW4_sis_res(:)))/sum(M2_BW4_dias_res(:)));
-fprintf('Fracción de eyección estimada IMG 5: %g\n', (sum(M2_BW5_dias_res(:)) - sum(M2_BW5_sis_res(:)))/sum(M2_BW5_dias_res(:)));
+% Fraccion de eyeccion estimada
+fprintf('-----Resultados usando roipoly----- \n');
+fprintf('FE IMG 1: %.1f%%\n', ((area_mm2_1D-area_mm2_1S)/area_mm2_1D)*100);
+fprintf('FE IMG 2: %.1f%%\n', ((area_mm2_2D-area_mm2_2S)/area_mm2_2D)*100);
+fprintf('FE IMG 3: %.1f%%\n', ((area_mm2_3D-area_mm2_3S)/area_mm2_3D)*100);
+fprintf('FE IMG 4: %.1f%%\n', ((area_mm2_4D-area_mm2_4S)/area_mm2_4D)*100);
+fprintf('FE IMG 5: %.1f%%\n', ((area_mm2_5D-area_mm2_5S)/area_mm2_5D)*100);

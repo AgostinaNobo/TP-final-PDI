@@ -17,38 +17,38 @@ BW5_S=mask_circle(im5_S_bin,[6 10]);
 figure;
 subplot(2,5,1);
 imshow(labeloverlay(uint8(im1_D_bin)*255, BW1_D, ...
-    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I1 Diastole');
+    'Colormap', [1 1 0], 'Transparency', 0.7)); title('I1 Diastole');
 subplot(2,5,6);
 imshow(labeloverlay(uint8(im1_S_bin)*255, BW1_S, ...
-    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I1 Sistole');
+    'Colormap', [1 1 0], 'Transparency', 0.7)); title('I1 Sistole');
 
 subplot(2,5,2);
 imshow(labeloverlay(uint8(im2_D_bin)*255, BW2_D, ...
-    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I2 Diastole');
+    'Colormap', [1 1 0], 'Transparency', 0.7)); title('I2 Diastole');
 subplot(2,5,7);
 imshow(labeloverlay(uint8(im2_S_bin)*255, BW2_S, ...
-    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I2 Sistole');
+    'Colormap', [1 1 0], 'Transparency', 0.7)); title('I2 Sistole');
 
 subplot(2,5,3);
 imshow(labeloverlay(uint8(im3_D_bin)*255, BW3_D, ...
-    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I3 Diastole');
+    'Colormap', [1 1 0], 'Transparency', 0.7)); title('I3 Diastole');
 subplot(2,5,8);
 imshow(labeloverlay(uint8(im3_S_bin)*255, BW3_S, ...
-    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I3 Sistole');
+    'Colormap', [1 1 0], 'Transparency', 0.7)); title('I3 Sistole');
 
 subplot(2,5,4);
 imshow(labeloverlay(uint8(im4_D_bin)*255, BW4_D, ...
-    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I4 Diastole');
+    'Colormap', [1 1 0], 'Transparency', 0.7)); title('I4 Diastole');
 subplot(2,5,9);
 imshow(labeloverlay(uint8(im4_S_bin)*255, BW4_S, ...
-    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I4 Sistole');
+    'Colormap', [1 1 0], 'Transparency', 0.7)); title('I4 Sistole');
 
 subplot(2,5,5);
 imshow(labeloverlay(uint8(im5_D_bin)*255, BW5_D, ...
-    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I5 Diastole');
+    'Colormap', [1 1 0], 'Transparency', 0.7)); title('I5 Diastole');
 subplot(2,5,10);
 imshow(labeloverlay(uint8(im5_S_bin)*255, BW5_S, ...
-    'Colormap', [1 0 0], 'Transparency', 0.7)); title('I5 Sistole');
+    'Colormap', [1 1 0], 'Transparency', 0.7)); title('I5 Sistole');
 
 % Area del VI en píxeles
 area_px_1D=nnz(BW1_D);
